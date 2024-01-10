@@ -1,4 +1,4 @@
-// Move displayUserData function outside of handleFormSubmit
+
 function displayUserData(userDetails) {
   const ul = document.getElementById('userList');
   const li = document.createElement('li');
@@ -7,8 +7,15 @@ function displayUserData(userDetails) {
   const deleteButton = document.createElement('button');
   deleteButton.textContent = 'Delete';
   deleteButton.onclick = () => {
-      localStorage.removeItem(userDetails.email);
-      ul.removeChild(li);
+      axios.delete(`https://crudcrud.com/api/4f0c0eee8a214c18a0de7b5101d4595c/appointmentData/${userDetails._id}`)
+      .then((res) =>{
+        console.log(`${userDetails.name} got deleted`);
+        ul.removeChild(li);
+      })
+      .catch((err) =>{
+        console.log('error while deleting the user ',err);
+      })
+      
   };
 
   const editButton = document.createElement('button');
